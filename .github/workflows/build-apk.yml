@@ -61,6 +61,23 @@ jobs:
           tail -n 200 /tmp/gradle-test.log >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Annotate test failure
+        if: failure()
+        run: |
+          # Emit the interesting Gradle lines as a GitHub annotation (readable via API)
+          if [ -f /tmp/gradle-test.log ]; then
+            # Prefer compiler/test failure context
+            BODY=$(grep -E 'e: |FAILED|error:|Test.*failed|What went wrong|> Task .*FAILED|Caused by:' /tmp/gradle-test.log | head -80 | tr '\n' ' | ')
+            if [ -z "$BODY" ]; then
+              BODY=$(tail -n 80 /tmp/gradle-test.log | tr '\n' ' | ')
+            fi
+            # Annotations cap ~64KB; keep it bounded
+            BODY=$(printf '%s' "$BODY" | head -c 6000)
+            echo "::error title=Gradle test failed::${BODY}"
+          else
+            echo "::error title=Gradle test failed::/tmp/gradle-test.log missing"
+          fi
+
       - name: Build debug APK
         run: |
           set -o pipefail
