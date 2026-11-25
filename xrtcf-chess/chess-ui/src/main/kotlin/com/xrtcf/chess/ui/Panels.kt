@@ -177,11 +177,11 @@ fun EvaluationGraph(
 @Composable
 fun QualityBadge(quality: MoveQuality, modifier: Modifier = Modifier) {
     val bg = when (quality.color) {
-        ArrowColorCompat.GREEN -> Color(0xFF22C55E)
-        ArrowColorCompat.BLUE -> Color(0xFF3B82F6)
-        ArrowColorCompat.YELLOW -> Color(0xFFEAB308)
-        ArrowColorCompat.ORANGE -> Color(0xFFF97316)
-        ArrowColorCompat.RED -> Color(0xFFEF4444)
+        com.xrtcf.chess.analysis.ArrowColor.GREEN -> Color(0xFF22C55E)
+        com.xrtcf.chess.analysis.ArrowColor.BLUE -> Color(0xFF3B82F6)
+        com.xrtcf.chess.analysis.ArrowColor.YELLOW -> Color(0xFFEAB308)
+        com.xrtcf.chess.analysis.ArrowColor.ORANGE -> Color(0xFFF97316)
+        com.xrtcf.chess.analysis.ArrowColor.RED -> Color(0xFFEF4444)
     }
     Text(
         text = quality.label.uppercase(),
@@ -193,12 +193,4 @@ fun QualityBadge(quality: MoveQuality, modifier: Modifier = Modifier) {
             .background(bg)
             .padding(horizontal = 10.dp, vertical = 4.dp),
     )
-}
-
-private object ArrowColorCompat {
-    val GREEN = com.xrtcf.chess.analysis.ArrowColor.GREEN
-    val BLUE = com.xrtcf.chess.analysis.ArrowColor.BLUE
-    val YELLOW = com.xrtcf.chess.analysis.ArrowColor.YELLOW
-    val ORANGE = com.xrtcf.chess.analysis.ArrowColor.ORANGE
-    val RED = com.xrtcf.chess.analysis.ArrowColor.RED
 }
