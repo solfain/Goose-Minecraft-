@@ -53,10 +53,22 @@ jobs:
           "$BIN" <<< 'uci' | head -3
 
       - name: Run tests
-        run: ./gradlew --no-daemon test
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon test 2>&1 | tee /tmp/gradle-test.log
+          echo '### Gradle test tail' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          tail -n 200 /tmp/gradle-test.log >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build debug APK
-        run: ./gradlew --no-daemon assembleDebug
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon assembleDebug 2>&1 | tee /tmp/gradle-assemble.log
+          echo '### Gradle assemble tail' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          tail -n 200 /tmp/gradle-assemble.log >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
@@ -64,6 +76,14 @@ jobs:
           name: xrtcf-chess-debug-apk
           path: xrtcf-chess/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-logs
+          path: /tmp/gradle-*.log
+          if-no-files-found: ignore
 
       - name: Upload test reports
         if: always()
