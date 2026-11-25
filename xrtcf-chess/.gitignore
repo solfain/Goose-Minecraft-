@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS
+.DS_Store
+
+# Engine binaries (fetched by scripts/fetch-stockfish.sh; not committed)
+app/src/main/assets/stockfish/
+*.nnue
+
+# Local toolchain
+*.o
+stockfish-src.tgz

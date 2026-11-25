@@ -1,0 +1,47 @@
+XRTCF Chess — Third-Party Notices
+=================================
+
+This application bundles or links against the following third-party software.
+
+1. Stockfish chess engine
+-------------------------
+Project:  Stockfish
+Website:  https://stockfishchess.org/
+Source:   https://github.com/official-stockfish/Stockfish
+License:  GNU General Public License version 3 (GPLv3)
+
+Stockfish is a free and open-source chess engine released under the GNU GPL v3.
+The Android binary packaged into the APK (via scripts/fetch-stockfish.sh) is
+obtained from official Stockfish GitHub releases:
+
+  https://github.com/official-stockfish/Stockfish/releases
+
+Because Stockfish is GPLv3, this application is distributed under GPLv3 as well
+when the engine binary is included. See LICENSE in the repository root.
+
+The engine is invoked as a separate process over the UCI protocol; no Stockfish
+source code is modified.
+
+2. Jetpack Compose / AndroidX
+-----------------------------
+Project:  Android Jetpack (Compose, Material3, Navigation, Lifecycle, DataStore)
+Source:   https://android.googlesource.com/platform/frameworks/support/
+License:  Apache License 2.0
+
+3. Kotlin standard library
+--------------------------
+Project:  Kotlin
+Source:   https://github.com/JetBrains/kotlin
+License:  Apache License 2.0
+
+4. JUnit 4 (test-only)
+----------------------
+Project:  JUnit
+Source:   https://github.com/junit-team/junit4
+License:  Eclipse Public License 1.0
+
+5. Gradle wrapper
+-----------------
+Project:  Gradle
+Source:   https://github.com/gradle/gradle
+License:  Apache License 2.0
