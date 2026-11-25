@@ -357,19 +357,21 @@ private fun DrawScope.drawBoardArrow(
     val headLen = cell * 0.35f
     val bodyEnd = Offset(end.x - ux * headLen, end.y - uy * headLen)
 
-    // Arrow body
-    withTransform({
-        rotate(
-            degrees = Math.toDegrees(kotlin.math.atan2(dy.toDouble(), dx.toDouble())).toFloat(),
-            pivot = start,
-        )
-    } {
-        drawRect(
-            color = color,
-            topLeft = Offset(start.x, start.y - stroke / 2),
-            size = Size(kotlin.math.max(0f, (bodyEnd - start).getDistance()), stroke),
-        )
-    }
+    // Arrow body — axis-aligned rect from start toward bodyEnd, rotated into place
+    val angle = Math.toDegrees(kotlin.math.atan2(dy.toDouble(), dx.toDouble())).toFloat()
+    val bodyLen = kotlin.math.max(0f, (bodyEnd - start).getDistance())
+    withTransform(
+        transformBlock = {
+            rotate(degrees = angle, pivot = start)
+        },
+        drawBlock = {
+            drawRect(
+                color = color,
+                topLeft = Offset(start.x, start.y - stroke / 2),
+                size = Size(bodyLen, stroke),
+            )
+        },
+    )
     // Arrow head
     val head = Path().apply {
         moveTo(end.x, end.y)

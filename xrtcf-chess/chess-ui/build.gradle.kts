@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(project(":chess-core"))
+    implementation(project(":chess-engine"))
     implementation(project(":chess-analysis"))
 
     val composeBom = platform("androidx.compose:compose-bom:2024.09.03")
